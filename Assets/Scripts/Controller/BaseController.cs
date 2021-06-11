@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BaseController : MonoBehaviour
 {
-
+    public BaseConfig config;
     protected float direction;
 
     public float Direction

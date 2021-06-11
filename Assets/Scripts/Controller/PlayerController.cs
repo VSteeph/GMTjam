@@ -13,13 +13,18 @@ public class PlayerController : BaseController
     private Vector3 playerVelocity;
     private float currentGravity;
     private bool isFalling;
+    private float actionTimer;
 
 
     [SerializeField]
     private CharacterController charController;
-
     [SerializeField]
-    private PlayerConfig config;
+    private PlayerConfig pConfig;
+    [SerializeField]
+    private IAction actionController;
+
+    private IAction defaultAction;
+    private BaseConfig defaultConfig;
 
     #endregion
 
@@ -32,14 +37,11 @@ public class PlayerController : BaseController
     {
         isGrounded = charController.isGrounded;
         playerVelocity.x = direction;
-        
-        if(IsJumping)
-        {
-            Jump();
-            IsJumping = false;
-        }
+        CheckInput();
+
     }
 
+    #region Mouvement
     private void FixedUpdate()
     {
         charController.Move(playerVelocity * config.speed * Time.fixedDeltaTime);
@@ -67,4 +69,48 @@ public class PlayerController : BaseController
             Debug.Log("Y velocity added :" + config.jumpForce);
         }
     }
+    #endregion
+
+    #region Input
+
+    private void CheckInput()
+    {
+        if (IsJumping)
+        {
+            Jump();
+            IsJumping = false;
+        }
+
+        if(IsInAction)
+        {
+            Action();
+        }
+
+        if(IsSuiciding)
+        {
+            Suicide();
+        }
+    }
+    private void Action()
+    {
+        if(actionTimer == 0)
+        {
+            //actionController?.UseAction();
+        }
+        else
+        {
+            actionTimer += Time.deltaTime;
+            if (actionTimer > config.actionCooldown)
+            {
+                IsInAction = false;
+                actionTimer = 0;
+            }
+        }       
+    }
+
+    private void Suicide()
+    {
+        
+    }
+    #endregion
 }
