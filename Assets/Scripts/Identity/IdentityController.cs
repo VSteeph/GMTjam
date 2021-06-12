@@ -4,9 +4,23 @@ using UnityEngine;
 
 public class IdentityController : MonoBehaviour
 {
-    public CapsuleCollider collider;
     public Animator anim;
-    public SpriteRenderer sprite;
+    public RuntimeAnimatorController runtimeAnimtor;
+
+    private void Awake()
+    {
+        ResetRuntimeAnimatorController();
+    }
+
+    public void ResetRuntimeAnimatorController()
+    {
+        anim.runtimeAnimatorController = runtimeAnimtor;
+    }
+    
+    public void SetNewRunTimeAnimator(RuntimeAnimatorController animatorController)
+    {
+        anim.runtimeAnimatorController = animatorController;
+    }
 
     public virtual void Hit()
     {

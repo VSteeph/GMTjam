@@ -18,10 +18,9 @@ public class PlayerController : BaseController
     [Header("Extra Player")]
     [SerializeField]
     private CharacterController charController;
+
     [SerializeField]
-    private PlayerConfig pConfig;
-
-
+    private Object DefaultActionAccessor;
     private IAction defaultAction;
     private BaseConfig defaultConfig;
 
@@ -29,6 +28,7 @@ public class PlayerController : BaseController
 
     private void Start()
     {
+        defaultAction = (IAction)DefaultActionAccessor;
         currentGravity = config.gravityForce;
     }
 
@@ -94,15 +94,15 @@ public class PlayerController : BaseController
 
         if (IsInAction)
         {
-            Action();
+            PerformAction();
         }
 
         if (IsSuiciding)
         {
-            Suicide();
+            PerformSuicide();
         }
     }
-    private void Action()
+    private void PerformAction()
     {
         if (actionTimer == 0)
         {
@@ -119,17 +119,25 @@ public class PlayerController : BaseController
         }
     }
 
-    private void Suicide()
+    private void PerformSuicide()
     {
 
     }
     #endregion
 
-    public override void ChangeIdentity(Controllable controllable)
+    protected override void AdjustCollider(BaseController targetController)
     {
-        base.ChangeIdentity(controllable);
-        charController.radius = controllable.identity.collider.radius;
-        charController.height = controllable.identity.collider.height;
+        charController.radius = targetController.ColliderDimension.radius;
+        charController.height = targetController.ColliderDimension.height;
+    }
+
+    private void DisablePlayer()
+    {
+
+    }
+
+    private void EnablePlayer()
+    {
         gameObject.SetActive(true);
         canMove = true;
     }

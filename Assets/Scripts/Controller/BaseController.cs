@@ -9,17 +9,53 @@ public class BaseController : MonoBehaviour
     [SerializeField]
     public Object shittyInterfaceAccess;
     [SerializeField]
-    protected IdentityController visual;
+    protected IdentityController identity;
+    [SerializeField]
+    protected CapsuleCollider colliderDimension;
+    [SerializeField]
+    protected BaseConfig config;
+    [SerializeField]
+    protected Rigidbody rb;
+    #endregion
 
+    #region Accesser
+    public IdentityController Identity
+    {
+        get
+        {
+            return identity;
+        }
+    }
 
-    public CapsuleCollider collider;
+    public CapsuleCollider ColliderDimension
+    {
+        get
+        {
+            return colliderDimension;
+        }
+    }
 
-    [Header("config")]
-    public BaseConfig config;
+    protected IAction actionController;
+    public IAction Action
+    {
+        get
+        {
+            return actionController;
+        }
+    }
+
+    public BaseConfig Config
+    {
+        get
+        {
+            return Config;
+        }
+    }
+
     #endregion
 
     #region Systeme
-    protected IAction actionController;
+    [HideInInspector]
     public bool canMove;
     protected float direction;
 
@@ -43,10 +79,69 @@ public class BaseController : MonoBehaviour
         actionController = (IAction)shittyInterfaceAccess;
         canMove = true;
     }
+
+    #region Possession
+    public virtual void StartEntityChange(BaseController targetController, float duration)
+    {
+        //Disable Target
+        targetController.DisablEntityPhysic();
+
+        //Position Player
+        canMove = false;
+        transform.position = targetController.transform.position + new Vector3(0, 1, 0);
+
+        StartCoroutine(ChannelEntityChange(duration, targetController));
+    }
+
+    protected IEnumerator ChannelEntityChange(float duration, BaseController targetController)
+    {
+        yield return new WaitForSeconds(duration);
+        ChangeEntity(targetController);
+    }
+
+    protected void ChangeEntity(BaseController targetController)
+    {
+        ChangeIdentity(targetController);
+        ChangeCharacteristics(targetController);
+        ChangeSkill(targetController);
+        EnablentityPhysic();
+        targetController.DestroyEntity();
+    }
+
+    protected void ChangeIdentity(BaseController targetController)
+    {
+        AdjustCollider(targetController);
+        identity.runtimeAnimtor = targetController.identity.runtimeAnimtor;
+        EnableEntityVisual();
+        targetController.DisableEntityVisual();
+    }
+
+    protected virtual void AdjustCollider(BaseController targetController)
+    {
+        Debug.Log("Base Adjust");
+        if (colliderDimension != null)
+        {
+            colliderDimension.radius = targetController.ColliderDimension.radius;
+            colliderDimension.height = targetController.ColliderDimension.height;
+        }
+    }
+
+    protected void ChangeCharacteristics(BaseController targetController)
+    {
+        config = targetController.config;
+    }
+    
+    protected void ChangeSkill(BaseController targetController)
+    {
+        actionController = targetController.actionController;
+    }
+
+    #endregion
+
     #region Feedback
     public void OnHit()
     {
-        visual.Hit();
+        //Default state Animator, Feedback surement ailleurs dans Identity? qui sont liés / déliés delegate?
     }
 
     public void OnDeath()
@@ -61,17 +156,48 @@ public class BaseController : MonoBehaviour
 
     #endregion
 
-    #region Possession
-    public virtual void ChangeIdentity(Controllable controllable)
+    public void EnablentityPhysic()
     {
-        actionController = controllable.action;
-        visual.anim.runtimeAnimatorController = controllable.identity.anim.runtimeAnimatorController;
-        if (collider != null)
+        canMove = true;
+        if (rb != null)
         {
-            collider.radius = controllable.identity.collider.radius;
-            collider.height = controllable.identity.collider.height;
+            rb.useGravity = true;
+            rb.isKinematic = false;
         }
+
+        if (colliderDimension != null)
+            colliderDimension.isTrigger = false;
     }
 
-    #endregion
+    public void EnableEntityVisual()
+    {
+        if (Identity != null)
+            Identity.ResetRuntimeAnimatorController();
+    }
+
+    public void DisablEntityPhysic()
+    {
+        canMove = false;
+        if (rb != null)
+        {
+            rb.useGravity = false;
+            rb.isKinematic = true;
+        }
+
+        if (colliderDimension != null)
+            colliderDimension.isTrigger = true;
+    }
+
+    public void DisableEntityVisual()
+    {
+        if (Identity?.anim != null)
+            Identity.anim.runtimeAnimatorController = null;
+    }
+
+    public void DestroyEntity()
+    {
+        //Destroy(gameObject);
+    }
+
+
 }
