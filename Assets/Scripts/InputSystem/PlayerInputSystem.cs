@@ -9,7 +9,6 @@ public class PlayerInputSystem : MonoBehaviour
     public void OnMove(InputAction.CallbackContext context)
     {
         controller.Direction = context.ReadValue<float>();
-        Debug.Log("Direction Input Received: " + controller.Direction);
     }
 
     public void OnJump(InputAction.CallbackContext context)

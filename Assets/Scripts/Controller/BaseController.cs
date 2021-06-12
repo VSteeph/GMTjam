@@ -5,14 +5,18 @@ using UnityEngine;
 public class BaseController : MonoBehaviour
 {
     #region Customisation
+    [Header("Properties")]
     [SerializeField]
-    protected IAction actionController;
+    public Object shittyInterfaceAccess;
     protected IdentityController visual;
-    public BaseConfig config;
     public CapsuleCollider collider;
+
+    [Header("config")]
+    public BaseConfig config;
     #endregion
 
     #region Systeme
+    protected IAction actionController;
     public bool canMove;
     protected float direction;
 
@@ -33,6 +37,7 @@ public class BaseController : MonoBehaviour
 
     private void Awake()
     {
+        actionController = (IAction)shittyInterfaceAccess;
         canMove = true;
     }
     #region Feedback
@@ -54,12 +59,15 @@ public class BaseController : MonoBehaviour
     #endregion
 
     #region Possession
-    public void ChangeIdentity(Controllable controllable)
+    public virtual void ChangeIdentity(Controllable controllable)
     {
         actionController = controllable.action;
         visual = controllable.identity;
-        collider.radius = visual.collider.radius;
-        collider.height = visual.collider.height;
+        if (collider != null)
+        {
+            collider.radius = visual.collider.radius;
+            collider.height = visual.collider.height;
+        }
     }
 
     #endregion

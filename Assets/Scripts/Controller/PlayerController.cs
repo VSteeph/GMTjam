@@ -15,7 +15,7 @@ public class PlayerController : BaseController
     private bool isFalling;
     private float actionTimer;
 
-
+    [Header("Extra Player")]
     [SerializeField]
     private CharacterController charController;
     [SerializeField]
@@ -34,6 +34,7 @@ public class PlayerController : BaseController
 
     private void Update()
     {
+        Debug.DrawRay(transform.position, transform.right * 5, Color.blue);
         isGrounded = charController.isGrounded;
         playerVelocity.x = direction * config.speed;
         CheckInput();
@@ -59,7 +60,6 @@ public class PlayerController : BaseController
 
         if (!isGrounded)
         {
-            Debug.Log("Current Gravity :" + currentGravity);
             currentGravity = Mathf.Min((currentGravity * config.gravityMultiplier), config.gravityLimit);
             playerVelocity.y -= currentGravity;
             isFalling = true;
@@ -124,4 +124,11 @@ public class PlayerController : BaseController
 
     }
     #endregion
+
+    public override void ChangeIdentity(Controllable controllable)
+    {
+        base.ChangeIdentity(controllable);
+        charController.radius = controllable.identity.collider.radius;
+        charController.height = controllable.identity.collider.height;
+    }
 }

@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerAction : IAction
+public class PlayerAction : MonoBehaviour, IAction
 {
     public void UseAction(BaseController controller, Transform player, float duration, float range)
     {
         RaycastHit hit;
-        if (Physics.Raycast(player.position, player.forward,out hit, range))
+        if (Physics.Raycast(player.position, player.right, out hit, range))
         {
             if (hit.collider.tag =="Capturable")
             {
@@ -15,7 +15,7 @@ public class PlayerAction : IAction
                 Controllable controllable = target.GetComponent<Controllable>();
                 player.position = target.transform.position;
                 controller.canMove = false;
-                StartIdentityChange(duration, controller, controllable);
+                StartCoroutine(StartIdentityChange(duration, controller, controllable));
             }
         }
     }

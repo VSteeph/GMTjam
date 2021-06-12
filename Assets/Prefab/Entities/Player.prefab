@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 7019333831927681129}
   - component: {fileID: 7019333831927681130}
   - component: {fileID: 7019333831927681131}
+  - component: {fileID: 7991092505618240927}
   - component: {fileID: 7019333831927681125}
   m_Layer: 0
   m_Name: Player
@@ -182,6 +183,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22c446c75a6f5224ebaf157073f520ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shittyInterfaceAccess: {fileID: 7991092505618240927}
   config:
     gravityForce: 1
     gravityMultiplier: 1
@@ -191,13 +193,21 @@ MonoBehaviour:
     actionCooldown: 0
     actionRange: 0
     actionDuration: 0
+  collider: {fileID: 0}
+  canMove: 0
   charController: {fileID: 7019333831927681125}
-  pConfig:
-    gravityForce: 0
-    gravityMultiplier: 0
-    gravityLimit: 0
-    speed: 0
-    jumpForce: 0
+--- !u!114 &7991092505618240927
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7019333831927681134}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc24d30ce11652e468799405b7bcc62d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!143 &7019333831927681125
 CharacterController:
   m_ObjectHideFlags: 0
