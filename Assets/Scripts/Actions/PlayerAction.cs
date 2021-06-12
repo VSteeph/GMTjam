@@ -13,8 +13,9 @@ public class PlayerAction : MonoBehaviour, IAction
             {
                 GameObject target = hit.collider.gameObject;
                 Controllable controllable = target.GetComponent<Controllable>();
-                player.position = target.transform.position;
                 controller.canMove = false;
+                player.position = target.transform.position + new Vector3(0,1,0);
+                target.SetActive(false);
                 StartCoroutine(StartIdentityChange(duration, controller, controllable));
             }
         }
@@ -23,7 +24,7 @@ public class PlayerAction : MonoBehaviour, IAction
     public IEnumerator StartIdentityChange(float duration, BaseController controller, Controllable controllable)
     {
         yield return new WaitForSeconds(duration);
-        controller.ChangeIdentity(controllable);
+        controller.ChangeIdentity(controllable);   
     }
 
 }

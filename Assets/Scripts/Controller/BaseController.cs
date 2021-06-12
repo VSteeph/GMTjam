@@ -8,7 +8,10 @@ public class BaseController : MonoBehaviour
     [Header("Properties")]
     [SerializeField]
     public Object shittyInterfaceAccess;
+    [SerializeField]
     protected IdentityController visual;
+
+
     public CapsuleCollider collider;
 
     [Header("config")]
@@ -62,11 +65,11 @@ public class BaseController : MonoBehaviour
     public virtual void ChangeIdentity(Controllable controllable)
     {
         actionController = controllable.action;
-        visual = controllable.identity;
+        visual.anim.runtimeAnimatorController = controllable.identity.anim.runtimeAnimatorController;
         if (collider != null)
         {
-            collider.radius = visual.collider.radius;
-            collider.height = visual.collider.height;
+            collider.radius = controllable.identity.collider.radius;
+            collider.height = controllable.identity.collider.height;
         }
     }
 

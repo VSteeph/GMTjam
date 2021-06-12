@@ -259,7 +259,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f2dc7d8079c63748a43da71b8d0bb4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collider: {fileID: 0}
+  collider: {fileID: 1868014791}
   anim: {fileID: 452151212}
   sprite: {fileID: 452151211}
 --- !u!1 &452151209
@@ -500,7 +500,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 308ff758656219f4fba408721bb50006, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 639191ddba1564d45a01571002eb1f76, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -521,7 +521,7 @@ Animator:
   m_GameObject: {fileID: 1371872827}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: b985c7ce8ad721e44ba8eb0d654415d0, type: 2}
+  m_Controller: {fileID: 9100000, guid: 6dd02202a730a4c418a4b5bb7f78c183, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -587,7 +587,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1868014788}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -3.74, y: 0.87, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 340212407}
@@ -671,6 +671,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3255680636745257043, guid: 612504cd2144fef45957ac3beaea1f98,
+        type: 3}
+      propertyPath: anim
+      value: 
+      objectReference: {fileID: 1371872830}
     - target: {fileID: 3739572186607418396, guid: 612504cd2144fef45957ac3beaea1f98,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -798,6 +803,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7856425443992629497, guid: 612504cd2144fef45957ac3beaea1f98,
         type: 3}
+      propertyPath: anim
+      value: 
+      objectReference: {fileID: 1371872830}
+    - target: {fileID: 7856425443992629497, guid: 612504cd2144fef45957ac3beaea1f98,
+        type: 3}
       propertyPath: config.speed
       value: 5
       objectReference: {fileID: 0}
@@ -806,7 +816,12 @@ PrefabInstance:
       propertyPath: config.actionRange
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 7856425443992629497, guid: 612504cd2144fef45957ac3beaea1f98,
+        type: 3}
+      propertyPath: config.actionDuration
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents:
-    - {fileID: 7856425442923793611, guid: 612504cd2144fef45957ac3beaea1f98, type: 3}
-    - {fileID: 7856425442923793610, guid: 612504cd2144fef45957ac3beaea1f98, type: 3}
+    - {fileID: 0}
+    - {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 612504cd2144fef45957ac3beaea1f98, type: 3}

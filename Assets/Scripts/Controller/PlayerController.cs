@@ -58,7 +58,7 @@ public class PlayerController : BaseController
             transform.rotation = Quaternion.Euler(new Vector3(0, -180, 0));
         }
 
-        if (!isGrounded)
+        if (!isGrounded && canMove)
         {
             currentGravity = Mathf.Min((currentGravity * config.gravityMultiplier), config.gravityLimit);
             playerVelocity.y -= currentGravity;
@@ -130,5 +130,7 @@ public class PlayerController : BaseController
         base.ChangeIdentity(controllable);
         charController.radius = controllable.identity.collider.radius;
         charController.height = controllable.identity.collider.height;
+        gameObject.SetActive(true);
+        canMove = true;
     }
 }
