@@ -106,7 +106,6 @@ public class BaseController : MonoBehaviour
         }
         else
         {
-            Debug.Log(isGrounded + " //" + Physics2D.gravity);
             if (isGrounded)
                 isGrounded = false;
             else
@@ -119,7 +118,6 @@ public class BaseController : MonoBehaviour
         Vector2 currentVelocity = Vector2.zero;
         Vector2 velocity = new Vector2(Direction * config.speed, rb.velocity.y);
         rb.velocity = Vector2.SmoothDamp(rb.velocity, velocity, ref currentVelocity, config.VelocitySmoothness);
-
         if (Direction > 0)
         {
             transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));

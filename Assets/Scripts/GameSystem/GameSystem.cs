@@ -10,6 +10,9 @@ public class GameSystem : MonoBehaviour
     public bool isPlayer1Alive;
     public bool isPlayer2Alive;
 
+    [Header("Explosion")]
+    public LayerMask ExplosionLayer;
+
     private PlayerController lastPlayerAlive;
     private static GameSystem gameSystem;
     public static GameSystem Instance
@@ -94,4 +97,22 @@ public class GameSystem : MonoBehaviour
 
     }
 
+    #region Utilities
+    public void TriggerExplosion(Vector2 orginExplosion, float Radius, float force)
+    {
+        var colliders = Physics2D.OverlapCircleAll(orginExplosion, Radius, ExplosionLayer);
+        for (int i = 0; i < colliders.Length; i++)
+        {
+            var currentRb = colliders[i].GetComponent<Rigidbody2D>();
+            if (currentRb  != null)
+            {
+                var direction = currentRb.position - orginExplosion;
+                float relativeForce = Mathf.InverseLerp(Radius, 0, direction.magnitude);
+                var normalizeDirection = direction.normalized;
+                currentRb.AddForceAtPosition(normalizeDirection * force * relativeForce, new Vector2(transform.position.x, transform.position.y) + normalizeDirection);
+            }
+        }
+
+    }
+    #endregion
 }
