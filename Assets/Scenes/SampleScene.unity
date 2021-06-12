@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0, g: 0.99999946, b: 0.99999946, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -287,20 +287,32 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!64 &160232309
-MeshCollider:
+--- !u!61 &160232309
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 160232308}
+  m_Enabled: 1
+  m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 10, y: 0.01}
+  m_EdgeRadius: 0
 --- !u!23 &160232310
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1236,12 +1248,17 @@ MonoBehaviour:
     gravityForce: 9
     gravityMultiplier: 1.01
     gravityLimit: 15
+    CheckgroundMargin: 0
+    VelocitySmoothness: 0
     speed: 1
     jumpForce: 1
     actionCooldown: 0.5
     actionRange: 5
     actionDuration: 0
   rb: {fileID: 168514476935009444}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!4 &168514478018330065
 Transform:
   m_ObjectHideFlags: 0
@@ -1295,10 +1312,29 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1371872830, guid: 612504cd2144fef45957ac3beaea1f98, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 2ec54cb654e2d814c842eda3e2ca980a, type: 2}
+    - target: {fileID: 766174304836810719, guid: 612504cd2144fef45957ac3beaea1f98,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: df08e339c2791fe4b9c2a79deb4ce71f, type: 2}
+    - target: {fileID: 3255680636745257043, guid: 612504cd2144fef45957ac3beaea1f98,
+        type: 3}
+      propertyPath: runtimeAnimtor
+      value: 
+      objectReference: {fileID: 9100000, guid: 2ec54cb654e2d814c842eda3e2ca980a, type: 2}
     - target: {fileID: 3739572186607418394, guid: 612504cd2144fef45957ac3beaea1f98,
         type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3739572186607418396, guid: 612504cd2144fef45957ac3beaea1f98,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.37
       objectReference: {fileID: 0}
     - target: {fileID: 5948146770133856821, guid: 612504cd2144fef45957ac3beaea1f98,
         type: 3}
@@ -1360,14 +1396,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5948146770257105850, guid: 612504cd2144fef45957ac3beaea1f98,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.3699999
+      objectReference: {fileID: 0}
     - target: {fileID: 5948146770423300320, guid: 612504cd2144fef45957ac3beaea1f98,
         type: 3}
       propertyPath: m_LocalPosition.x
-<<<<<<< HEAD
-      value: 5.2857227
-=======
-      value: 5.329065
->>>>>>> 592f8afcaa7c003862d8b0aaebc4bbafb1539705
+      value: 5.7718725
+      objectReference: {fileID: 0}
+    - target: {fileID: 5948146770423300320, guid: 612504cd2144fef45957ac3beaea1f98,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.9136474
       objectReference: {fileID: 0}
     - target: {fileID: 5948146770423300320, guid: 612504cd2144fef45957ac3beaea1f98,
         type: 3}
@@ -1377,18 +1419,18 @@ PrefabInstance:
     - target: {fileID: 5948146770610810508, guid: 612504cd2144fef45957ac3beaea1f98,
         type: 3}
       propertyPath: m_LocalPosition.x
-<<<<<<< HEAD
-      value: 5.2857227
-=======
-      value: 5.329065
->>>>>>> 592f8afcaa7c003862d8b0aaebc4bbafb1539705
+      value: 5.7718725
+      objectReference: {fileID: 0}
+    - target: {fileID: 5948146770610810508, guid: 612504cd2144fef45957ac3beaea1f98,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.9136474
       objectReference: {fileID: 0}
     - target: {fileID: 5948146770610810508, guid: 612504cd2144fef45957ac3beaea1f98,
         type: 3}
       propertyPath: m_LocalPosition.z
       value: -11
       objectReference: {fileID: 0}
-<<<<<<< HEAD
     - target: {fileID: 7416405834168164974, guid: 612504cd2144fef45957ac3beaea1f98,
         type: 3}
       propertyPath: isGodMode
@@ -1404,17 +1446,20 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 7856425443992629497, guid: 612504cd2144fef45957ac3beaea1f98,
+    - target: {fileID: 7856425443992629498, guid: 612504cd2144fef45957ac3beaea1f98,
         type: 3}
-      propertyPath: config.jumpForce
-      value: 5
+      propertyPath: m_LocalPosition.y
+      value: 1.37
       objectReference: {fileID: 0}
     - target: {fileID: 7856425443992629500, guid: 612504cd2144fef45957ac3beaea1f98,
         type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-=======
->>>>>>> 592f8afcaa7c003862d8b0aaebc4bbafb1539705
+    - target: {fileID: 8344185006901337269, guid: 612504cd2144fef45957ac3beaea1f98,
+        type: 3}
+      propertyPath: runtimeAnimtor
+      value: 
+      objectReference: {fileID: 9100000, guid: df08e339c2791fe4b9c2a79deb4ce71f, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 612504cd2144fef45957ac3beaea1f98, type: 3}

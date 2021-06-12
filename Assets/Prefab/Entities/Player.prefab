@@ -204,12 +204,12 @@ MonoBehaviour:
   colliderDimension: {fileID: 5895784197562033839}
   config:
     gravityForce: 9.56
-    gravityMultiplier: 1.02
-    gravityLimit: 20
+    gravityMultiplier: 1.5
+    gravityLimit: 30
     CheckgroundMargin: 0.1
     VelocitySmoothness: 0.05
     speed: 5
-    jumpForce: 5
+    jumpForce: 200
     actionCooldown: 1
     actionRange: 5
     actionDuration: 0.5
@@ -257,8 +257,8 @@ Rigidbody2D:
   m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 1
-  m_Mass: 0.44634956
+  m_UseAutoMass: 0
+  m_Mass: 20
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
