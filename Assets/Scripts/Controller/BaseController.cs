@@ -271,7 +271,7 @@ public class BaseController : MonoBehaviour
         canMove = true;
         if (rb != null)
         {
-            rb.gravityScale = 0;
+            rb.gravityScale = 1;
             rb.isKinematic = false;
         }
 
@@ -290,7 +290,7 @@ public class BaseController : MonoBehaviour
         canMove = false;
         if (rb != null)
         {
-            rb.gravityScale = 1;
+            rb.gravityScale = 0;
             rb.isKinematic = true;
         }
 

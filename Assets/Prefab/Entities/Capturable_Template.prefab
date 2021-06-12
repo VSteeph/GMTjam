@@ -153,12 +153,12 @@ MonoBehaviour:
   colliderDimension: {fileID: 3946078268867358638}
   config:
     gravityForce: 9.56
-    gravityMultiplier: 1.02
-    gravityLimit: 20
-    CheckgroundMargin: 0
-    VelocitySmoothness: 0
+    gravityMultiplier: 1.5
+    gravityLimit: 30
+    CheckgroundMargin: 0.1
+    VelocitySmoothness: 0.05
     speed: 5
-    jumpForce: 750
+    jumpForce: 200
     actionCooldown: 0.5
     actionRange: 5
     actionDuration: 0
@@ -198,7 +198,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!70 &3946078268867358638
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
