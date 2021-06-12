@@ -8,6 +8,8 @@ public struct BaseConfig
     public float gravityForce;
     public float gravityMultiplier;
     public float gravityLimit;
+    public float CheckgroundMargin;
+    public float VelocitySmoothness;
 
     [Header("Mouvement")]
     public float speed;

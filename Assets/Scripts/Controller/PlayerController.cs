@@ -6,19 +6,14 @@ public class PlayerController : BaseController
     #region Properties
     public bool IsJumping { get; set; }
     public bool IsSuiciding { get; set; }
-    public bool isGrounded { get; private set; }
     public bool canBeAttacked { get; protected set; }
     #endregion
 
     #region Variable
-    private Vector3 playerVelocity;
+    private Vector2 playerVelocity;
     private float currentGravity;
-    private bool isFalling;
 
     [Header("Extra Player")]
-    [SerializeField]
-    private CharacterController charController;
-
     [SerializeField]
     private Object DefaultActionAccessor;
     private IAction defaultAction;
@@ -36,8 +31,7 @@ public class PlayerController : BaseController
     private void Update()
     {
         Debug.DrawRay(transform.position, transform.right * 5, Color.blue);
-        isGrounded = charController.isGrounded;
-        playerVelocity.x = direction * config.speed;
+        IsGrounded();
         CheckInput();
 
     }
@@ -47,29 +41,8 @@ public class PlayerController : BaseController
     {
         if (canMove)
         {
-            charController.Move(playerVelocity * Time.fixedDeltaTime);
-        }
-            
-        if (playerVelocity.x > 0)
-        {
-            transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
-        }
-        else if (playerVelocity.x < 0)
-        {
-            transform.rotation = Quaternion.Euler(new Vector3(0, -180, 0));
-        }
-
-        if (!isGrounded && canMove)
-        {
-            currentGravity = Mathf.Min((currentGravity * config.gravityMultiplier), config.gravityLimit);
-            playerVelocity.y -= currentGravity;
-            isFalling = true;
-        }
-        if (isGrounded && isFalling)
-        {
-            Debug.Log("landed");
-            currentGravity = config.gravityForce;
-            isFalling = false;
+            PerformMovement();
+            AdjustGravity();
         }
     }
 
@@ -77,8 +50,8 @@ public class PlayerController : BaseController
     {
         if (isGrounded)
         {
-            playerVelocity.y = config.jumpForce;
-            Debug.Log("Y velocity added :" + config.jumpForce);
+            var forceToApply = new Vector2(0, config.jumpForce);
+            AddForce(forceToApply, ForceMode2D.Impulse);
         }
     }
     #endregion
@@ -109,12 +82,6 @@ public class PlayerController : BaseController
     {
         base.PerformSuicide();
         GameSystem.Instance.KillPlayer(this);
-    }
-
-    protected override void AdjustCollider(BaseController targetController)
-    {
-        charController.radius = targetController.ColliderDimension.radius;
-        charController.height = targetController.ColliderDimension.height;
     }
 
     protected override void ExtraSettingForEntityChange()
