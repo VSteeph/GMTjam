@@ -19,7 +19,7 @@ public class PlayerInputSystem : MonoBehaviour
 
     public void OnAction(InputAction.CallbackContext context)
     {
-        controller.IsInAction = context.action.triggered;
+        controller.ActionTriggered = context.action.triggered;
         Debug.Log("Action Key Pressed");
     }
 

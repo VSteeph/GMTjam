@@ -57,6 +57,7 @@ public class BaseController : MonoBehaviour
     #region Systeme
     [SerializeField]
     protected LayerMask groundLayer;
+    public LayerMask targetableLayer;
     [HideInInspector]
     protected bool canMove;
     protected float direction;
@@ -76,7 +77,8 @@ public class BaseController : MonoBehaviour
         }
     }
 
-    public bool IsInAction { get; set; }
+    public bool ActionTriggered { get; set; }
+    protected bool IsInAction;
     #endregion
 
     private void Awake()
@@ -176,7 +178,7 @@ public class BaseController : MonoBehaviour
         EnablentityPhysic();
         transform.parent = null;
         ExtraSettingForEntityChange();
-        targetController.DestroyEntity();
+        StartCoroutine(GameSystem.Instance.DestroyEntity(targetController.gameObject));
     }
 
     protected void ChangeIdentity(BaseController targetController)
@@ -203,7 +205,8 @@ public class BaseController : MonoBehaviour
 
     protected void ChangeSkill(BaseController targetController)
     {
-        actionController = targetController.actionController;
+        Destroy(gameObject.GetComponent(Action.GetType()));
+        actionController = (IAction)gameObject.AddComponent(targetController.actionController.GetType());
     }
 
     protected virtual void ExtraSettingForEntityChange()
@@ -226,7 +229,7 @@ public class BaseController : MonoBehaviour
             actionTimer += Time.deltaTime;
             if (actionTimer > config.actionCooldown)
             {
-                IsInAction = false;
+                ActionTriggered = false;
                 actionTimer = 0;
             }
         }
@@ -304,10 +307,6 @@ public class BaseController : MonoBehaviour
             Identity.anim.runtimeAnimatorController = null;
     }
 
-    public void DestroyEntity()
-    {
-        //Destroy(gameObject);
-    }
 
     #endregion
 

@@ -66,9 +66,11 @@ public class PlayerController : BaseController
             IsJumping = false;
         }
 
-        if (IsInAction)
+        if (ActionTriggered && !IsInAction)
         {
+            IsInAction = true;
             PerformAction();
+            IsInAction = false;
         }
 
         if (IsSuiciding)

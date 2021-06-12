@@ -217,6 +217,9 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 1591
+  targetableLayer:
+    serializedVersion: 2
+    m_Bits: 1591
   DefaultActionAccessor: {fileID: 7991092505618240927}
 --- !u!114 &7991092505618240927
 MonoBehaviour:
@@ -230,9 +233,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc24d30ce11652e468799405b7bcc62d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  possessionLayer:
-    serializedVersion: 2
-    m_Bits: 1591
 --- !u!70 &5895784197562033839
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

@@ -115,4 +115,13 @@ public class GameSystem : MonoBehaviour
 
     }
     #endregion
+
+    #region EntityManagement
+    public IEnumerator DestroyEntity(GameObject objectToDestroy)
+    {
+        yield return new WaitForSeconds(1);
+        Destroy(objectToDestroy);
+    }
+
+    #endregion
 }
