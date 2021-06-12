@@ -70,6 +70,8 @@ public class BaseController : MonoBehaviour
     protected float actionTimer = 0;
     protected bool isGrounded;
     protected bool wasGrounded;
+    [HideInInspector]
+    public bool ignoreRotation = false;
 
     public float Direction
     {
@@ -98,6 +100,15 @@ public class BaseController : MonoBehaviour
         {
             actionTimer -= Time.deltaTime;
             IsInAction = false;
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (canMove)
+        {
+            PerformMovement();
+            AdjustGravity();
         }
     }
 
@@ -134,11 +145,11 @@ public class BaseController : MonoBehaviour
         Vector2 currentVelocity = Vector2.zero;
         Vector2 velocity = new Vector2(Direction * config.speed, rb.velocity.y);
         rb.velocity = Vector2.SmoothDamp(rb.velocity, velocity, ref currentVelocity, config.VelocitySmoothness);
-        if (Direction > 0)
+        if (Direction > 0 && !ignoreRotation)
         {
             transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
         }
-        else if (Direction < 0)
+        else if (Direction < 0 && !ignoreRotation)
         {
             transform.rotation = Quaternion.Euler(new Vector3(0, -180, 0));
         }

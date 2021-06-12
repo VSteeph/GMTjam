@@ -63,7 +63,7 @@ GameObject:
   - component: {fileID: 5222704110412546447}
   m_Layer: 8
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -213,7 +213,12 @@ MonoBehaviour:
     actionCooldown: 1
     actionRange: 5
     actionDuration: 0.5
+    MaxRange: 0
+    MinRange: 0
+    bulletVelocity: 0
   rb: {fileID: 5222704110412546447}
+  tagTarget: 
+  projectileModel: {fileID: 0}
   groundLayer:
     serializedVersion: 2
     m_Bits: 1591
@@ -247,7 +252,7 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.5, y: 1}
+  m_Size: {x: 1.37, y: 3.01}
   m_Direction: 0
 --- !u!50 &5222704110412546447
 Rigidbody2D:

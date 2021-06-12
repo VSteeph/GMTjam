@@ -43,14 +43,6 @@ public class PlayerController : BaseController
     }
 
     #region Mouvement
-    private void FixedUpdate()
-    {
-        if (canMove)
-        {
-            PerformMovement();
-            AdjustGravity();
-        }
-    }
 
     private void Jump()
     {
