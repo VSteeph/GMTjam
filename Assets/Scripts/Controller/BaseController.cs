@@ -56,8 +56,9 @@ public class BaseController : MonoBehaviour
 
     #region Systeme
     [HideInInspector]
-    public bool canMove;
+    protected bool canMove;
     protected float direction;
+    protected float actionTimer;
 
     public float Direction
     {
@@ -105,6 +106,8 @@ public class BaseController : MonoBehaviour
         ChangeCharacteristics(targetController);
         ChangeSkill(targetController);
         EnablentityPhysic();
+        transform.parent = null;
+        ExtraSettingForEntityChange();
         targetController.DestroyEntity();
     }
 
@@ -136,6 +139,39 @@ public class BaseController : MonoBehaviour
         actionController = targetController.actionController;
     }
 
+    protected virtual void ExtraSettingForEntityChange()
+    {
+
+    }
+
+
+    #endregion
+
+    #region Actions
+    protected void PerformAction()
+    {
+        if (actionTimer == 0)
+        {
+            actionController?.UseAction(this, transform, config.actionDuration, config.actionRange);
+        }
+        else
+        {
+            actionTimer += Time.deltaTime;
+            if (actionTimer > config.actionCooldown)
+            {
+                IsInAction = false;
+                actionTimer = 0;
+            }
+        }
+    }
+
+    protected virtual void PerformSuicide()
+    {
+        DisablEntityPhysic();
+        Identity.Death(this);
+    }
+
+
     #endregion
 
     #region Feedback
@@ -155,6 +191,8 @@ public class BaseController : MonoBehaviour
     }
 
     #endregion
+
+    #region GameObject Management
 
     public void EnablentityPhysic()
     {
@@ -198,6 +236,8 @@ public class BaseController : MonoBehaviour
     {
         //Destroy(gameObject);
     }
+
+    #endregion
 
 
 }

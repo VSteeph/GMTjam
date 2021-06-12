@@ -7,13 +7,13 @@ public class PlayerController : BaseController
     public bool IsJumping { get; set; }
     public bool IsSuiciding { get; set; }
     public bool isGrounded { get; private set; }
+    public bool canBeAttacked { get; protected set; }
     #endregion
 
     #region Variable
     private Vector3 playerVelocity;
     private float currentGravity;
     private bool isFalling;
-    private float actionTimer;
 
     [Header("Extra Player")]
     [SerializeField]
@@ -30,6 +30,7 @@ public class PlayerController : BaseController
     {
         defaultAction = (IAction)DefaultActionAccessor;
         currentGravity = config.gravityForce;
+        GameSystem.Instance.SetAlive(this);
     }
 
     private void Update()
@@ -102,28 +103,13 @@ public class PlayerController : BaseController
             PerformSuicide();
         }
     }
-    private void PerformAction()
-    {
-        if (actionTimer == 0)
-        {
-            actionController?.UseAction(this, transform, config.actionDuration, config.actionRange);
-        }
-        else
-        {
-            actionTimer += Time.deltaTime;
-            if (actionTimer > config.actionCooldown)
-            {
-                IsInAction = false;
-                actionTimer = 0;
-            }
-        }
-    }
-
-    private void PerformSuicide()
-    {
-
-    }
     #endregion
+
+    protected override void PerformSuicide()
+    {
+        base.PerformSuicide();
+        GameSystem.Instance.KillPlayer(this);
+    }
 
     protected override void AdjustCollider(BaseController targetController)
     {
@@ -131,14 +117,22 @@ public class PlayerController : BaseController
         charController.height = targetController.ColliderDimension.height;
     }
 
-    private void DisablePlayer()
+    protected override void ExtraSettingForEntityChange()
     {
-
+        EnableEnemyDetection();
     }
 
-    private void EnablePlayer()
+    public void EnableEnemyDetection()
     {
-        gameObject.SetActive(true);
-        canMove = true;
+        canBeAttacked = true;
+    }
+    public void DisableEnemyDetection()
+    {
+        canBeAttacked = false;
+    }
+
+    public void SwapToEnergyVisual()
+    {
+
     }
 }

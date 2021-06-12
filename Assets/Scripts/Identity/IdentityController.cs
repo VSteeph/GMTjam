@@ -26,4 +26,10 @@ public class IdentityController : MonoBehaviour
     {
         Debug.Log("Has been hit");
     }
+
+    public virtual void Death(BaseController controller)
+    {
+        Debug.Log("Death of " + gameObject.name);
+        controller.DisableEntityVisual();
+    }
 }
