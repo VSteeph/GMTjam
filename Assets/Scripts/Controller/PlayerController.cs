@@ -35,7 +35,7 @@ public class PlayerController : BaseController
     private void Update()
     {
         isGrounded = charController.isGrounded;
-        playerVelocity.x = direction;
+        playerVelocity.x = direction * config.speed;
         CheckInput();
 
     }
@@ -45,7 +45,7 @@ public class PlayerController : BaseController
     {
         if (canMove)
         {
-            charController.Move(playerVelocity * config.speed * Time.fixedDeltaTime);
+            charController.Move(playerVelocity * Time.fixedDeltaTime);
         }
             
         if (playerVelocity.x > 0)
