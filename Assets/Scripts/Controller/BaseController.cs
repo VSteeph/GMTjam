@@ -16,7 +16,13 @@ public class BaseController : MonoBehaviour
     protected BaseConfig config;
     [SerializeField]
     protected Rigidbody2D rb;
+
+    [Header("Combat")]
+    public string tagTarget;
+    public GameObject projectileModel;
+
     #endregion
+
 
     #region Accesser
     public IdentityController Identity
@@ -48,7 +54,7 @@ public class BaseController : MonoBehaviour
     {
         get
         {
-            return Config;
+            return config;
         }
     }
 
@@ -61,7 +67,7 @@ public class BaseController : MonoBehaviour
     [HideInInspector]
     protected bool canMove;
     protected float direction;
-    protected float actionTimer;
+    protected float actionTimer = 0;
     protected bool isGrounded;
     protected bool wasGrounded;
 
@@ -77,14 +83,22 @@ public class BaseController : MonoBehaviour
         }
     }
 
-    public bool ActionTriggered { get; set; }
-    protected bool IsInAction;
+    public bool IsInAction { get; set; }
     #endregion
 
     private void Awake()
     {
         actionController = (IAction)shittyInterfaceAccess;
         canMove = true;
+    }
+
+    private void Update()
+    {
+        if (actionTimer > 0)
+        {
+            actionTimer -= Time.deltaTime;
+            IsInAction = false;
+        }
     }
 
     #region Movement
@@ -205,6 +219,7 @@ public class BaseController : MonoBehaviour
 
     protected void ChangeSkill(BaseController targetController)
     {
+        projectileModel = targetController.projectileModel;
         Destroy(gameObject.GetComponent(Action.GetType()));
         actionController = (IAction)gameObject.AddComponent(targetController.actionController.GetType());
     }
@@ -220,18 +235,11 @@ public class BaseController : MonoBehaviour
     #region Actions
     protected void PerformAction()
     {
-        if (actionTimer == 0)
+        Debug.Log(actionTimer);
+        if (actionTimer <= 0)
         {
             actionController?.UseAction(this, transform, config.actionDuration, config.actionRange);
-        }
-        else
-        {
-            actionTimer += Time.deltaTime;
-            if (actionTimer > config.actionCooldown)
-            {
-                ActionTriggered = false;
-                actionTimer = 0;
-            }
+            actionTimer = config.actionCooldown;
         }
     }
 

@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Capturable
   - Decor
+  - EnCapture
   layers:
   - Default
   - TransparentFX

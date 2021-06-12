@@ -14,19 +14,16 @@ public class PlayerInputSystem : MonoBehaviour
     public void OnJump(InputAction.CallbackContext context)
     {
         controller.IsJumping = context.action.triggered;
-        Debug.Log("Jumping Key Pressed");
     }
 
     public void OnAction(InputAction.CallbackContext context)
     {
-        controller.ActionTriggered = context.action.triggered;
-        Debug.Log("Action Key Pressed");
+        controller.IsInAction = context.action.triggered;
     }
 
     public void OnSuicide(InputAction.CallbackContext context)
     {
         controller.IsSuiciding = context.action.triggered;
-        Debug.Log("Suicide Key Pressed");
     }
 
 }

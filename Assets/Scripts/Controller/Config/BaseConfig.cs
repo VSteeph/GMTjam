@@ -19,4 +19,7 @@ public struct BaseConfig
     public float actionCooldown;
     public float actionRange;
     public float actionDuration;
+
+    [Header("Projectile")]
+    public float bulletVelocity;
 }

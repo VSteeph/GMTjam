@@ -34,6 +34,12 @@ public class PlayerController : BaseController
         IsGrounded();
         CheckInput();
 
+        if (actionTimer > 0)
+        {
+            actionTimer -= Time.deltaTime;
+            IsInAction = false;
+        }
+
     }
 
     #region Mouvement
@@ -66,11 +72,9 @@ public class PlayerController : BaseController
             IsJumping = false;
         }
 
-        if (ActionTriggered && !IsInAction)
+        if (IsInAction)
         {
-            IsInAction = true;
             PerformAction();
-            IsInAction = false;
         }
 
         if (IsSuiciding)
