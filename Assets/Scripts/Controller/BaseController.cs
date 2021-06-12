@@ -31,6 +31,10 @@ public class BaseController : MonoBehaviour
     public bool IsInAction { get; set; }
     #endregion
 
+    private void Awake()
+    {
+        canMove = true;
+    }
     #region Feedback
     public void OnHit()
     {
