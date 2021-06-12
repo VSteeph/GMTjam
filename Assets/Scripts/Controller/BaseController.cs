@@ -11,11 +11,11 @@ public class BaseController : MonoBehaviour
     [SerializeField]
     protected IdentityController identity;
     [SerializeField]
-    protected CapsuleCollider colliderDimension;
+    protected CapsuleCollider2D colliderDimension;
     [SerializeField]
     protected BaseConfig config;
     [SerializeField]
-    protected Rigidbody rb;
+    protected Rigidbody2D rb;
     #endregion
 
     #region Accesser
@@ -27,7 +27,7 @@ public class BaseController : MonoBehaviour
         }
     }
 
-    public CapsuleCollider ColliderDimension
+    public CapsuleCollider2D ColliderDimension
     {
         get
         {
@@ -55,10 +55,14 @@ public class BaseController : MonoBehaviour
     #endregion
 
     #region Systeme
+    [SerializeField]
+    protected LayerMask groundLayer;
     [HideInInspector]
     protected bool canMove;
     protected float direction;
     protected float actionTimer;
+    protected bool isGrounded;
+    protected bool wasGrounded;
 
     public float Direction
     {
@@ -80,6 +84,72 @@ public class BaseController : MonoBehaviour
         actionController = (IAction)shittyInterfaceAccess;
         canMove = true;
     }
+
+    #region Movement
+    protected void IsGrounded()
+    {
+       
+        Vector3 distance = -transform.up * (colliderDimension.size.y / 2 + config.CheckgroundMargin);
+        Debug.DrawRay(transform.position, distance, Color.red);
+        if (Physics2D.Raycast(transform.position, -Vector2.up, (colliderDimension.size.y / 2 + config.CheckgroundMargin), groundLayer))
+        {
+            if (isGrounded)
+            {
+                OnLand();
+                ResetGravity();
+                wasGrounded = true;
+            }             
+            else
+            {
+                isGrounded = true;             
+            }
+        }
+        else
+        {
+            Debug.Log(isGrounded + " //" + Physics2D.gravity);
+            if (isGrounded)
+                isGrounded = false;
+            else
+                wasGrounded = false;
+        }
+    }
+
+    protected void PerformMovement()
+    {
+        Vector2 currentVelocity = Vector2.zero;
+        Vector2 velocity = new Vector2(Direction * config.speed, rb.velocity.y);
+        rb.velocity = Vector2.SmoothDamp(rb.velocity, velocity, ref currentVelocity, config.VelocitySmoothness);
+
+        if (Direction > 0)
+        {
+            transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
+        }
+        else if (Direction < 0)
+        {
+            transform.rotation = Quaternion.Euler(new Vector3(0, -180, 0));
+        }
+    }
+
+    protected void AdjustGravity()
+    {
+        if (!isGrounded)
+        {
+            Physics2D.gravity = new Vector2(Physics2D.gravity.x, Mathf.Max((Physics2D.gravity.y * config.gravityMultiplier), -config.gravityLimit));
+        }
+    }
+
+    protected void ResetGravity()
+    {
+        Physics2D.gravity = new Vector2(Physics2D.gravity.x, -config.gravityForce);
+    }
+
+    protected void AddForce(Vector2 force, ForceMode2D forceMode)
+    {
+        rb.AddForce(force, forceMode);
+    }
+
+
+    #endregion
 
     #region Possession
     public virtual void StartEntityChange(BaseController targetController, float duration)
@@ -124,8 +194,7 @@ public class BaseController : MonoBehaviour
         Debug.Log("Base Adjust");
         if (colliderDimension != null)
         {
-            colliderDimension.radius = targetController.ColliderDimension.radius;
-            colliderDimension.height = targetController.ColliderDimension.height;
+            colliderDimension.size = targetController.ColliderDimension.size;
         }
     }
 
@@ -133,7 +202,7 @@ public class BaseController : MonoBehaviour
     {
         config = targetController.config;
     }
-    
+
     protected void ChangeSkill(BaseController targetController)
     {
         actionController = targetController.actionController;
@@ -190,6 +259,11 @@ public class BaseController : MonoBehaviour
 
     }
 
+    public void OnLand()
+    {
+
+    }
+
     #endregion
 
     #region GameObject Management
@@ -199,7 +273,7 @@ public class BaseController : MonoBehaviour
         canMove = true;
         if (rb != null)
         {
-            rb.useGravity = true;
+            rb.gravityScale = 0;
             rb.isKinematic = false;
         }
 
@@ -218,7 +292,7 @@ public class BaseController : MonoBehaviour
         canMove = false;
         if (rb != null)
         {
-            rb.useGravity = false;
+            rb.gravityScale = 1;
             rb.isKinematic = true;
         }
 

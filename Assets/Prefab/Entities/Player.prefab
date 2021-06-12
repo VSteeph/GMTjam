@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7019333831473466519}
   - component: {fileID: 2396073283204853953}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Visual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -60,7 +60,7 @@ GameObject:
   - component: {fileID: 7019333831927681131}
   - component: {fileID: 7991092505618240927}
   - component: {fileID: 7019333831927681125}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -205,14 +205,17 @@ MonoBehaviour:
     gravityForce: 1
     gravityMultiplier: 1
     gravityLimit: 20
+    CheckgroundMargin: 0
+    VelocitySmoothness: 0
     speed: 2
     jumpForce: 40
     actionCooldown: 0
     actionRange: 0
     actionDuration: 0
   rb: {fileID: 0}
-  canMove: 0
-  charController: {fileID: 7019333831927681125}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
   DefaultActionAccessor: {fileID: 7991092505618240927}
 --- !u!114 &7991092505618240927
 MonoBehaviour:
@@ -255,7 +258,7 @@ GameObject:
   - component: {fileID: 7019333832998087775}
   - component: {fileID: 8062064551324470392}
   - component: {fileID: 6353999088858454955}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
