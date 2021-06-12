@@ -455,6 +455,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!143 &827785582 stripped
+CharacterController:
+  m_CorrespondingSourceObject: {fileID: 7856425443992629495, guid: 612504cd2144fef45957ac3beaea1f98,
+    type: 3}
+  m_PrefabInstance: {fileID: 5948146770205198972}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &936712346
 GameObject:
   m_ObjectHideFlags: 0
@@ -466,8 +472,8 @@ GameObject:
   - component: {fileID: 936712347}
   - component: {fileID: 936712350}
   - component: {fileID: 936712349}
-  - component: {fileID: 936712348}
   - component: {fileID: 936712351}
+  - component: {fileID: 936712348}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -489,8 +495,8 @@ Transform:
   m_Father: {fileID: 1868014789}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &936712348
-BoxCollider:
+--- !u!136 &936712348
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -499,8 +505,9 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Radius: 0.5
+  m_Height: 1
+  m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &936712349
 MeshRenderer:
@@ -563,7 +570,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NastyInspectorAccess: {fileID: 11500000, guid: dc24d30ce11652e468799405b7bcc62d,
     type: 3}
-  visual: {fileID: 340212408}
+  identity: {fileID: 0}
 --- !u!1 &1371872827 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7856425442923793614, guid: 612504cd2144fef45957ac3beaea1f98,
@@ -853,6 +860,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Visual
       objectReference: {fileID: 0}
+    - target: {fileID: 7856425443992629497, guid: 612504cd2144fef45957ac3beaea1f98,
+        type: 3}
+      propertyPath: collider
+      value: 
+      objectReference: {fileID: 827785582}
     m_RemovedComponents:
     - {fileID: 7856425442923793611, guid: 612504cd2144fef45957ac3beaea1f98, type: 3}
     - {fileID: 7856425442923793610, guid: 612504cd2144fef45957ac3beaea1f98, type: 3}
