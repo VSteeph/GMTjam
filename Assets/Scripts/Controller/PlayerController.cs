@@ -20,8 +20,7 @@ public class PlayerController : BaseController
     private CharacterController charController;
     [SerializeField]
     private PlayerConfig pConfig;
-    [SerializeField]
-    private IAction actionController;
+
 
     private IAction defaultAction;
     private BaseConfig defaultConfig;
@@ -44,7 +43,19 @@ public class PlayerController : BaseController
     #region Mouvement
     private void FixedUpdate()
     {
-        charController.Move(playerVelocity * config.speed * Time.fixedDeltaTime);
+        if (canMove)
+        {
+            charController.Move(playerVelocity * config.speed * Time.fixedDeltaTime);
+        }
+            
+        if (playerVelocity.x > 0)
+        {
+            transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
+        }
+        else if (playerVelocity.x < 0)
+        {
+            transform.rotation = Quaternion.Euler(new Vector3(0, -180, 0));
+        }
 
         if (!isGrounded)
         {
@@ -53,7 +64,7 @@ public class PlayerController : BaseController
             playerVelocity.y -= currentGravity;
             isFalling = true;
         }
-        if(isGrounded && isFalling)
+        if (isGrounded && isFalling)
         {
             Debug.Log("landed");
             currentGravity = config.gravityForce;
@@ -63,7 +74,7 @@ public class PlayerController : BaseController
 
     private void Jump()
     {
-        if(isGrounded)
+        if (isGrounded)
         {
             playerVelocity.y = config.jumpForce;
             Debug.Log("Y velocity added :" + config.jumpForce);
@@ -81,21 +92,21 @@ public class PlayerController : BaseController
             IsJumping = false;
         }
 
-        if(IsInAction)
+        if (IsInAction)
         {
             Action();
         }
 
-        if(IsSuiciding)
+        if (IsSuiciding)
         {
             Suicide();
         }
     }
     private void Action()
     {
-        if(actionTimer == 0)
+        if (actionTimer == 0)
         {
-            //actionController?.UseAction();
+            actionController?.UseAction(this, transform, config.actionDuration, config.actionRange);
         }
         else
         {
@@ -105,12 +116,12 @@ public class PlayerController : BaseController
                 IsInAction = false;
                 actionTimer = 0;
             }
-        }       
+        }
     }
 
     private void Suicide()
     {
-        
+
     }
     #endregion
 }
